@@ -1,0 +1,15 @@
+FROM alpine
+MAINTAINER Lon Kaut <lonkaut@gmail.com>
+
+ENV LANG C.UTF-8
+COPY script.sh /entrypoint.sh
+RUN  \
+  apk update \
+  && apk add bash curl python3 jq \
+  && pip3 install --upgrade pip \
+  && pip3 install yq \
+  && echo -e "\033[0;31m****\033[0;37mThis Dockerfile requires the presense of your script.sh to serve as the entrypoint script\033[0;31m****\033[0;0m" \
+  && chmod a+x /entrypoint.sh
+
+
+CMD ["/entrypoint.sh"]
